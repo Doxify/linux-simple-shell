@@ -34,7 +34,7 @@
 #
 
 
-ROOTNAME=<last>_<first>_HW
+ROOTNAME=georgescu_andrei_HW
 HW=3
 FOPTION=_main
 RUNOPTIONS="Prompt> "
