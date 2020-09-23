@@ -12,15 +12,16 @@
 **************************************************************/
 #ifndef SHELL_H
 #define SHELL_H
-
+#include <stdio.h>
 #include <stdbool.h>
 
 typedef struct Shell {
-    bool init;
+    bool running;
+    // char * prefix;
 } Shell;
 
-void init(Shell * shell); // Initializes the shell.
-void shutdown(Shell * shell); // Shutsdown the shell.
-bool isInitialized(Shell * shell); // Returns initialized state.
+void run(Shell * shell); // Starts the "shell loop".
+void shutdown(Shell * shell); // Shutsdown the shell loop.
+bool isRunning(Shell * shell); // Returns running state.
 
 #endif

@@ -42,7 +42,7 @@ CC=gcc
 CFLAGS= -g -I.
 LIBS =pthread
 DEPS = 
-OBJ = $(ROOTNAME)$(HW)$(FOPTION).o
+OBJ = $(ROOTNAME)$(HW)$(FOPTION).o Shell.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) 

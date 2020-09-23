@@ -13,23 +13,34 @@
 #include "Shell.h"
 
 /**
- *  Initializes a Shell, _
- */  
-void init(Shell * shell) {
-    if(!shell->init) {
-        // do init stuff here...
-        shell->init = true;
-    }
-};
-
-/**
  *  Shutsdown a Shell, _
  */ 
 void shutdown(Shell * shell) {
     // Do shutdown stuff.
-    shell->init = false;
+    shell->running = false;
 };
 
-bool isInitialized(Shell * shell) {
-    return shell->init;
+/**
+ *  Returns whether or not the shell has been initailized.
+ */ 
+bool isRunning(Shell * shell) {
+    return shell->running;
+}
+
+/**
+ *  -- Shell Loop -- 
+ *  This loop reads lines of user input, parses the input, and 
+ */
+void run(Shell * shell) {
+    // Change the running state.
+    shell->running = true;
+
+    // Start the shell loop.
+    while(isRunning(shell)) {
+        // Getting user input from keyboard.
+        char input[256];
+        printf("\nprefix ");
+        scanf("%s", input);
+        printf("Got input: %s", input);
+    }
 }

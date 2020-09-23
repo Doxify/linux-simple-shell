@@ -7,31 +7,33 @@
 *
 * File: georgescu_andrei_HW3_main.cpp
 *
-* Description: 
+* Description: This is the driver program for the Shell. It is
+*              responsible for initializing a shell and starting
+*              the shell loop.      
 *
 **************************************************************/
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Shell.h"
 
 int main(int argc, char * argv[]) {
     // Declaring variables.
     Shell * shell;
 
-    // Initializing the shell and verifying that it's initialized.
-    init(shell);
-    if(!isInitialized(shell)) {
+    // // Setting the prefix is one is specified.
+    // if(argc == 1) {
+    //     shell->prefix = argv[0];
+    // } else {
+    //     shell->prefix = ">";
+    // }
+
+    // Starting the shell loop and verifing that it's running.
+    run(shell);
+    if(!isRunning(shell)) {
         printf("Error occurred while initializing the shell.");
         return -1;
     }
-
-    /**
-     *  -- Shell Loop -- 
-     *  This loop reads lines of user input, parses the input, and 
-     *  executes commands by forking/creating new processes.
-     */ 
-    do {
-        // do shell loop stuff.
-    } while(isInitialized(shell));
-
     
+    return 1;
 }
