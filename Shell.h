@@ -13,15 +13,22 @@
 #ifndef SHELL_H
 #define SHELL_H
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <ctype.h> 
+#include <string.h>
 
 typedef struct Shell {
     bool running;
-    // char * prefix;
+    char *prefix;
+    char *buffer;
+    int bytesInBuffer;
 } Shell;
 
-void run(Shell * shell); // Starts the "shell loop".
-void shutdown(Shell * shell); // Shutsdown the shell loop.
-bool isRunning(Shell * shell); // Returns running state.
+int init(Shell *);
+void run(Shell *); // Starts the "shell loop".
+void shutdown(Shell *); // Shutsdown the shell loop.
+bool isRunning(Shell *); // Returns running state.
+void getKeyboardInput(Shell *);
 
 #endif

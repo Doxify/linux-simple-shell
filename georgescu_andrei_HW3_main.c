@@ -19,19 +19,26 @@
 
 int main(int argc, char * argv[]) {
     // Declaring variables.
-    Shell * shell;
+    Shell * shell = (Shell*)malloc(sizeof(Shell*));
 
-    // // Setting the prefix is one is specified.
-    // if(argc == 1) {
-    //     shell->prefix = argv[0];
-    // } else {
-    //     shell->prefix = ">";
-    // }
+    // Setting the prefix is one is specified.
+    if(argc == 2) {
+        shell->prefix = argv[1];
+        // memcpy(argv[1], shell->prefix, sizeof(argv[1]));
+    } else {
+        shell->prefix = "> ";
+    }
+
+    // Initializing the shell and verifying that it has been initialized.
+    if(init(shell) == -1) {
+        printf("Error occurred while initializing the shell.");
+        return -1;
+    }
 
     // Starting the shell loop and verifing that it's running.
     run(shell);
     if(!isRunning(shell)) {
-        printf("Error occurred while initializing the shell.");
+        printf("Error occurred while starting the shell loop.");
         return -1;
     }
     
