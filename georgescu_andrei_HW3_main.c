@@ -24,7 +24,6 @@ int main(int argc, char * argv[]) {
     // Setting the prefix if one is specified.
     if(argc == 2) {
         shell->prefix = argv[1];
-        // memcpy(argv[1], shell->prefix, sizeof(argv[1]));
     } else {
         shell->prefix = "> ";
     }
@@ -35,12 +34,8 @@ int main(int argc, char * argv[]) {
         return -1;
     }
 
-    // Starting the shell loop and verifing that it's running.
+    // Starting the shell loop.
     run(shell);
-    if(!isRunning(shell)) {
-        printf("Error occurred while starting the shell loop.");
-        return -1;
-    }
     
     return 1;
 }

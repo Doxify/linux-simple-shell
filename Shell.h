@@ -26,14 +26,14 @@
 // This is the Shell Struct, in theory you can have multiple shells.
 typedef struct Shell {
     bool running;
-    char *prefix;
-    char *buffer;
+    char * prefix;
+    char * buffer;
 } Shell;
 
 int init(Shell *); // Initializes a shell.
 void run(Shell *); // Starts the "shell loop".
 void shutdown(Shell *); // Shutsdown the shell loop and frees any allocated memory.
-bool isRunning(Shell *); // Returns running state.
+bool isRunning(const Shell *); // Returns running state.
 
 /**
  * Helper function that handles user input.
