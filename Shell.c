@@ -18,6 +18,7 @@ int init(Shell * shell) {
     // Verifying that the shell has not yet been initialized.
     if(!shell->running) {
         shell->buffer = (char*)malloc(SHELL_BUFFER_SIZE);
+        // shell->args = (char*)malloc(SHELL_BUFFER_SIZE);
         return 1;
     } else {
         printf("This shell has already been initialized");
@@ -34,6 +35,7 @@ void shutdown(Shell * shell) {
 
     // Freeing up shell allocated memory;
     free(shell->buffer);
+    // free(shell->args);
 };
 
 /**
@@ -56,28 +58,36 @@ void run(Shell * shell) {
     // Responsible for parsing user input and executing it.
     while(isRunning(shell)) {
         // Getting user input from keyboard.
-        handleUserInput(shell);
+        int input = handleUserInput(shell);
+
+        // If the user enters an invalid input or exits the shell,
+        // then we should stop the shell from running and exit.
+        if(input == 0) {
+            shell->running = false;
+            continue;
+        };
         
         // // Forking before we exec so that the parent doesn't get killed
         // // and verifying that the fork was successful.
         // pid_t fork_pid = fork();
         // if(fork_pid == -1) {
         //     printf("** An error occurred during shell runtime. (fork) **");
-        //     return;
+        //     shell->running = false;
+        //     continue;
         // }
 
-        // // If fork succeeds and we are in the child process,
-        // // we can then use the exec system call.
-        // if(fork_pid != 0) {
-
-        // }
-
-        // // If fork succeeds and we are in main, we wait for
-        // // the child process to finish.
+        // // If fork succeeds, detect whether we are in the parent or child process.
         // if(fork_pid == 0) {
-        //     // wait(); ??
+        //     // When we are in the child process, we should execute.
+        //     int result = execvp(shell->args, shell->args)
+        //     if(execvp(shell->args[0], *shell->args) == -1) {
+        //         printf("An error occurred while running %s", shell->args);
+        //     }
+        //     exit(0);
+        // } else {
+        //     // When we are in the main or parent process, we should wait.
+        //     wait(NULL);
         // }
-
 
 
         // // fork -> execvp -> wait -> DONE!
@@ -96,41 +106,44 @@ void run(Shell * shell) {
  *  This function is responsible for getting user input from the keyboard
  *  and saving it to the shell's input buffer. It also handles special
  *  cases such as when an error occurs or the user wants to exit the shell.
+ *  @return 1 if input was parsed successfully, 0 if an error occurred
  */
-void handleUserInput(Shell * shell) {
-    int tokenCount = 0;
-    char args[SHELL_BUFFER_SIZE];
-    
-    // Getting and saving user input to the shell's buffer.
+int handleUserInput(Shell * shell) {    
+    // Prompting the user for input, verifying it, and storing it in the shell's buffer.
     printf("\n%s", shell->prefix);
     fgets(shell->buffer, SHELL_BUFFER_SIZE, stdin);
-    
-    // Parsing input with strtok_r.
+
+    // Parsing input with strtok_r and storing it in the shell.
+    int tokenCount = 0;
     char * r = NULL;
     char * tok = strtok_r(shell->buffer, " ", &r);
     while(tok != NULL) {
         // Storing args in the shell's arg array.
-        strcpy(&args[tokenCount++], tok);
+        // strcpy(&shell->args[tokenCount++], tok);
+        shell->args[tokenCount] = *tok;
         tok = strtok_r(NULL, " ", &r);
+        tokenCount++;
     }
 
-    // Checking for errors.
-    if(tokenCount == 0) {
-        // If the user doesn't enter any input, prompt them again.
-        printf("Error: Please enter at least one input.");
-        handleUserInput(shell);
-    } 
+    printf("tokens: %d\n", tokenCount);
+    for(int i = 0; i < tokenCount; i++) {
+        printf("%s ", &shell->args[i]);
+    }
 
-    // If only one token exists, check if it is exit or quit.
+
+    // Validating parsed input.
     if(tokenCount == 1) {
-        if(strncmp(&args[0], "quit", 4) || strncmp(&args[0], "exit", 4)) {
-            printf("Shutting down...");
-            shutdown(shell);
+        // If the user quits, return 0.
+        if(strncmp(shell->args, "quit", 4) == 0 || strncmp(shell->args, "exit", 4) == 0) {
+            return 0;
+        }
+
+        // If the user enters a blank line, prompt them for input again.
+        if(strncmp(shell->args, "\n", 1) == 0) {
+            printf("Detected empty input, please try again.");
+            return handleUserInput(shell);
         }
     }
 
-    printf("printing args: (%d)", tokenCount);
-    for(int i = 0; i < tokenCount; i++) {
-        printf("%s ", &args[i]);
-    }
+    return 1;
 }

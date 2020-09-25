@@ -28,6 +28,8 @@ typedef struct Shell {
     bool running;
     char * prefix;
     char * buffer;
+    char * args;
+    int argsCount;
 } Shell;
 
 int init(Shell *); // Initializes a shell.
@@ -35,13 +37,8 @@ void run(Shell *); // Starts the "shell loop".
 void shutdown(Shell *); // Shutsdown the shell loop and frees any allocated memory.
 bool isRunning(const Shell *); // Returns running state.
 
-/**
- * Helper function that handles user input.
- * It's responsible for pasring input so that the shell can
- * exit when a user requests it and it's also responsible for
- * handling errors that occur when users input text.
- */
-void handleUserInput(Shell *);
+
+int handleUserInput(Shell *);
 
 int shell_execvp(const char *file, char *const argv[]);
 

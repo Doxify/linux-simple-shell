@@ -18,7 +18,7 @@
 #include "Shell.h"
 
 int main(int argc, char * argv[]) {
-    // Declaring variables.
+    // Instantiating Shell.
     Shell * shell = (Shell*)malloc(sizeof(Shell*));
 
     // Setting the prefix if one is specified.
@@ -34,8 +34,10 @@ int main(int argc, char * argv[]) {
         return -1;
     }
 
-    // Starting the shell loop.
+    // Starting the shell loop and shutting down the shell once the
+    // shell looop exists.
     run(shell);
-    
+    shutdown(shell);
+
     return 1;
 }
