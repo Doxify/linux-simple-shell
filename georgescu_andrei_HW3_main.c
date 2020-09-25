@@ -21,7 +21,7 @@ int main(int argc, char * argv[]) {
     // Declaring variables.
     Shell * shell = (Shell*)malloc(sizeof(Shell*));
 
-    // Setting the prefix is one is specified.
+    // Setting the prefix if one is specified.
     if(argc == 2) {
         shell->prefix = argv[1];
         // memcpy(argv[1], shell->prefix, sizeof(argv[1]));
