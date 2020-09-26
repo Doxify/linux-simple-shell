@@ -19,7 +19,11 @@
 
 int main(int argc, char * argv[]) {
     // Instantiating Shell.
-    Shell * shell = (Shell*)malloc(sizeof(Shell*));
+    Shell * shell = (Shell*)malloc(sizeof(Shell));
+    if(shell == 0) {
+        printf("Error occurred while allocating shell.");
+        return -1;
+    }
 
     // Setting the prefix if one is specified.
     if(argc == 2) {
@@ -34,10 +38,10 @@ int main(int argc, char * argv[]) {
         return -1;
     }
 
-    // Starting the shell loop and shutting down the shell once the
-    // shell looop exists.
+    // Starting the shell loop.
     run(shell);
     shutdown(shell);
+    free(shell);
 
-    return 1;
+    return 0;
 }

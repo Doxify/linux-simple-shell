@@ -7,7 +7,8 @@
 *
 * File: Shell.h
 *
-* Description: 
+* Description: Defines the Shell struct as well as prototypes
+*              for the methods that it should implement.
 *
 **************************************************************/
 #ifndef SHELL_H
@@ -28,18 +29,15 @@ typedef struct Shell {
     bool running;
     char * prefix;
     char * buffer;
-    char * args;
+    char ** args;
     int argsCount;
 } Shell;
 
 int init(Shell *); // Initializes a shell.
 void run(Shell *); // Starts the "shell loop".
 void shutdown(Shell *); // Shutsdown the shell loop and frees any allocated memory.
-bool isRunning(const Shell *); // Returns running state.
-
-
-int handleUserInput(Shell *);
-
-int shell_execvp(const char *file, char *const argv[]);
+void freeArgs(Shell *); // Frees all memory allocated by args.
+int getUserInput(Shell *); // Gets user input and stores it in the buffer.
+int parseBuffer(Shell *); // Parses the buffer and stores arguments in args.
 
 #endif
