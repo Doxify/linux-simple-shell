@@ -34,9 +34,9 @@
 #
 
 
-ROOTNAME=georgescu_andrei_HW
-HW=3
-FOPTION=_main
+# ROOTNAME=georgescu_andrei_HW
+# HW=3
+FOPTION=main
 RUNOPTIONS="Prompt> "
 CC=gcc
 CFLAGS= -g -I.

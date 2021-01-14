@@ -1,11 +1,7 @@
 /**************************************************************
-* Class: CSC-415-01 Fall 2020
-* Name: Andrei Georgescu
-* Github Name: Doxify
-* Student ID: 920776919
-* Project: Assignment 3 – Simple Shell
+* Written by Andrei Georgescu
 *
-* File: georgescu_andrei_HW3_main.cpp
+* File: main.c
 *
 * Description: This is the driver program for the Shell. It is
 *              responsible for initializing a shell and starting
